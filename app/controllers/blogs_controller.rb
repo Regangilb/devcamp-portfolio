@@ -1,5 +1,5 @@
 class BlogsController < ApplicationController
-  before_action :set_blog, only: [:show, :edit, :update, :destroy, :toggle_status]
+  before_action :set_blog, only: [:show, :edit, :update, :destroy]
 
   # GET /blogs
   # GET /blogs.json
@@ -12,7 +12,7 @@ class BlogsController < ApplicationController
   def show
   end
 
-  # GET /blogs/new
+    # GET /blogs/new
   def new
     @blog = Blog.new
   end
@@ -28,29 +28,25 @@ class BlogsController < ApplicationController
 
     respond_to do |format|
       if @blog.save
-        format.html { redirect_to @blog, notice: 'Blog was successfully created.' }
-        format.json { render :show, status: :created, location: @blog }
+        format.html { redirect_to @blog, notice: 'Your post is now live.' }
       else
         format.html { render :new }
-        format.json { render json: @blog.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # PATCH/PUT /blogs/1
   # PATCH/PUT /blogs/1.json
-  def update 
+  def update
     respond_to do |format|
       if @blog.update(blog_params)
         format.html { redirect_to @blog, notice: 'Blog was successfully updated.' }
-        format.json { render :show, status: :ok, location: @blog }
       else
         format.html { render :edit }
-        format.json { render json: @blog.errors, status: :unprocessable_entity }
       end
     end
   end
-
+  
   # DELETE /blogs/1
   # DELETE /blogs/1.json
   def destroy
@@ -60,6 +56,7 @@ class BlogsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 
 def toggle_status
     if @blog.draft?
@@ -80,7 +77,8 @@ end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def blog_params
+   def blog_params
       params.require(:blog).permit(:title, :body)
     end
+
 
